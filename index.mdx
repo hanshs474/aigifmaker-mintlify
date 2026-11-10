@@ -1,0 +1,32 @@
+---
+title: "AI GIF Maker API"
+description: "Turn text into animated GIFs with AI GIF Maker. Native GIF generation — no video conversion. Type what you want and download your GIF in about a minute."
+---
+
+Turn text into animated GIFs with AI GIF Maker. Native GIF generation — no video conversion. Type what you want and download your GIF in about a minute.
+
+These are the official docs for calling [AI GIF Maker](https://aigifmaker.ai/?utm_source=mintlify&utm_medium=docs) from your own code. One account and one API key work from plain HTTP, from an SDK in ten languages, from a command-line tool and from any MCP client: send a prompt, get back the URL of a finished animated GIF, ready for a chat, a README, a Discord server or your own app.
+
+## Start in three steps
+
+1. Sign in on [AI GIF Maker](https://aigifmaker.ai/?utm_source=mintlify&utm_medium=docs).
+2. Create a key at https://aigifmaker.ai/settings/apikeys.
+3. `export AIGIFMAKER_API_KEY=sk-...` and call the [HTTP API](/http-api), an [SDK](/sdks), the [CLI](/cli) or the [MCP server](/mcp-server).
+
+```bash
+curl -s -X POST https://aigifmaker.ai/api/ai/generate \
+  -H "Authorization: Bearer $AIGIFMAKER_API_KEY" -H "Content-Type: application/json" \
+  -d '{"provider":"openlux","mediaType":"image","model":"gif-maker-v1","scene":"text-to-image","prompt":"a corgi in sunglasses dancing on a beach","options":{"output_format":"gif"}}'
+```
+
+## What every client does
+
+1. `POST /api/ai/generate` with your prompt; keep the returned `data.id`.
+2. `POST /api/ai/query` with that id every 3 seconds until `status` is `success` (the GIF is `images[0]`) or `failed`.
+3. `POST /api/user/get-user-credits` any time to read the balance, free.
+
+## Credits
+
+Each GIF costs 1 credit on your AI GIF Maker account, the same as on the website. New accounts get one free GIF (it carries a small aigifmaker.ai badge). A GIF that fails to generate gives its credit back. Credit packs and monthly plans are on the [pricing](https://aigifmaker.ai/pricing?utm_source=mintlify&utm_medium=docs) page.
+
+Questions: support@aigifmaker.ai

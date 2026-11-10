@@ -1,0 +1,64 @@
+---
+title: "MCP server (Claude, Cursor, Gemini CLI)"
+description: "Make animated GIFs from chat: the aigifmaker-mcp npm package or the remote endpoint https://aigifmaker.ai/api/mcp, with generate_gif, check_gif and check_credits."
+---
+
+Ask for a GIF in chat and get the URL back. [AI GIF Maker](https://aigifmaker.ai/?utm_source=mintlify&utm_medium=docs) gives MCP clients two ways in, both on your own account and API key (create one at https://aigifmaker.ai/settings/apikeys):
+
+- **Remote, nothing to install**: `https://aigifmaker.ai/api/mcp` (Streamable HTTP). Send `Authorization: Bearer sk-...` with each request.
+- **Local stdio server**: the npm package [`aigifmaker-mcp`](https://www.npmjs.com/package/aigifmaker-mcp) ([source](https://github.com/hanshs474/aigifmaker-mcp)).
+
+## Remote endpoint
+
+Claude Code in one line:
+
+```bash
+claude mcp add --transport http aigifmaker https://aigifmaker.ai/api/mcp --header "Authorization: Bearer sk-..."
+```
+
+Any client that takes a remote server URL plus headers:
+
+```json
+{
+  "mcpServers": {
+    "aigifmaker": {
+      "url": "https://aigifmaker.ai/api/mcp",
+      "headers": { "Authorization": "Bearer sk-..." }
+    }
+  }
+}
+```
+
+## npm package
+
+```json
+{
+  "mcpServers": {
+    "aigifmaker": {
+      "command": "npx",
+      "args": ["-y", "aigifmaker-mcp"],
+      "env": { "AIGIFMAKER_API_KEY": "sk-..." }
+    }
+  }
+}
+```
+
+That block goes in Claude Desktop's `claude_desktop_config.json`, Cursor's `.cursor/mcp.json`, or any client that reads the same format.
+
+- Claude Code: `claude mcp add aigifmaker -e AIGIFMAKER_API_KEY=sk-... -- npx -y aigifmaker-mcp`
+- Gemini CLI: `gemini extensions install https://github.com/hanshs474/aigifmaker-mcp`
+- Claude Code plugin: `claude plugin marketplace add hanshs474/aigifmaker-mcp`, then `claude plugin install aigifmaker@aigifmaker`
+
+## Tools
+
+Both ways expose the same three tools.
+
+| Tool | What it does |
+|---|---|
+| `generate_gif` | Text prompt in, animated GIF URL out. Waits for the GIF (usually about a minute) |
+| `check_gif` | Collects a GIF that was still running or queued when `generate_gif` returned, by its task id. Free to call |
+| `check_credits` | Credits left on your account. Free to call |
+
+A run from an account that has not bought credits yet may wait in a queue before it starts. If `generate_gif` returns a task id instead of a URL, the model calls `check_gif` later to collect the GIF.
+
+Each GIF costs 1 credit on your AI GIF Maker account, the same as on the website. New accounts get one free GIF (it carries a small aigifmaker.ai badge). A GIF that fails to generate gives its credit back. Credit packs are on the [pricing](https://aigifmaker.ai/pricing?utm_source=mintlify&utm_medium=docs) page.

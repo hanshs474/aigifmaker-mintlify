@@ -1,0 +1,26 @@
+---
+title: "Command-line tool"
+description: "The aigifmaker CLI turns a prompt into an animated GIF URL from Windows, macOS or Linux: Chocolatey, Snap, Docker, go install or a prebuilt binary."
+---
+
+`aigifmaker "prompt"` submits the prompt to [AI GIF Maker](https://aigifmaker.ai/?utm_source=mintlify&utm_medium=docs), waits for the GIF and prints its URL. `aigifmaker credits` prints the credits left.
+
+```bash
+export AIGIFMAKER_API_KEY=sk-...   # from https://aigifmaker.ai/settings/apikeys
+aigifmaker "a cat dancing in the rain, pixel art"
+aigifmaker credits
+```
+
+## Install
+
+| Where | Command |
+|---|---|
+| Windows (Chocolatey) | `choco install aigifmaker` |
+| Linux (Snap) | `sudo snap install aigifmaker` |
+| Docker | `docker run --rm -e AIGIFMAKER_API_KEY san8888/aigifmaker "a cat dancing in the rain, pixel art"` |
+| Go | `go install github.com/hanshs474/aigifmaker-go/cmd/aigifmaker@latest` |
+| Prebuilt binaries | [aigifmaker-go releases](https://github.com/hanshs474/aigifmaker-go/releases) (Windows, macOS, Linux; amd64 and arm64) |
+
+Exit codes of the Chocolatey, Snap and Go builds: `0` ok, `1` failure, `2` usage, `3` key problem, `4` out of credits.
+
+Each GIF costs 1 credit on your AI GIF Maker account, the same as on the website. New accounts get one free GIF (it carries a small aigifmaker.ai badge). Credits and plans are on the [pricing](https://aigifmaker.ai/pricing?utm_source=mintlify&utm_medium=docs) page.

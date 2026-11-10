@@ -1,0 +1,27 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "AI GIF Maker API",
+  "description": "Turn text into animated GIFs with AI GIF Maker. Native GIF generation — no video conversion. Type what you want and download your GIF in about a minute.",
+  "colors": { "primary": "#7C3AED", "light": "#A78BFA", "dark": "#5B21B6" },
+  "favicon": "/favicon.png",
+  "navigation": {
+    "groups": [
+      { "group": "Get started", "pages": ["index", "quickstart", "http-api"] },
+      { "group": "Clients", "pages": ["sdks", "mcp-server", "cli"] }
+    ]
+  },
+  "navbar": {
+    "links": [
+      { "label": "Text to GIF", "href": "https://aigifmaker.ai/text-to-gif?utm_source=mintlify&utm_medium=docs" },
+      { "label": "Pricing", "href": "https://aigifmaker.ai/pricing?utm_source=mintlify&utm_medium=docs" }
+    ],
+    "primary": { "type": "button", "label": "Open AI GIF Maker", "href": "https://aigifmaker.ai/?utm_source=mintlify&utm_medium=docs" }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://aigifmaker.ai/?utm_source=mintlify&utm_medium=docs",
+      "github": "https://github.com/hanshs474/aigifmaker-mcp"
+    }
+  }
+}

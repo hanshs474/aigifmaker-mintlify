@@ -1,0 +1,46 @@
+---
+title: "SDKs"
+description: "Official AI GIF Maker clients in ten languages, all with the same generate, submit, status and credits calls."
+---
+
+Every SDK has the same four calls: `generate(prompt)` submits, waits and returns the GIF URL; `submit(prompt)` returns a task id; `status(id)` returns where it stands; `credits()` returns the balance (free). All read `AIGIFMAKER_API_KEY` (create a key at https://aigifmaker.ai/settings/apikeys), poll every 3 seconds, and raise the same errors: `AuthError` (wrong or missing key), `QuotaError` (out of credits), `RejectedError` (prompt refused) and a base `AigifmakerError`.
+
+| Language | Registry | Install | Source |
+|---|---|---|---|
+| Python | [PyPI](https://pypi.org/project/aigifmaker/) | `pip install aigifmaker` | [hanshs474/aigifmaker-py](https://github.com/hanshs474/aigifmaker-py) |
+| JavaScript / TypeScript | [npm](https://www.npmjs.com/package/aigifmaker) and [JSR](https://jsr.io/@aigifmaker/aigifmaker) | `npm install aigifmaker` | [hanshs474/aigifmaker-ts](https://github.com/hanshs474/aigifmaker-ts) |
+| Go | [pkg.go.dev](https://pkg.go.dev/github.com/hanshs474/aigifmaker-go) | `go get github.com/hanshs474/aigifmaker-go` | [hanshs474/aigifmaker-go](https://github.com/hanshs474/aigifmaker-go) |
+| Rust | [crates.io](https://crates.io/crates/aigifmaker) | `cargo add aigifmaker` | [hanshs474/aigifmaker-rs](https://github.com/hanshs474/aigifmaker-rs) |
+| Ruby | [RubyGems](https://rubygems.org/gems/aigifmaker) | `gem install aigifmaker` | [hanshs474/aigifmaker-rb](https://github.com/hanshs474/aigifmaker-rb) |
+| PHP | [Packagist](https://packagist.org/packages/hanshs474/aigifmaker) | `composer require hanshs474/aigifmaker` | [hanshs474/aigifmaker-php](https://github.com/hanshs474/aigifmaker-php) |
+| Dart / Flutter | [pub.dev](https://pub.dev/packages/aigifmaker) | `dart pub add aigifmaker` | [hanshs474/aigifmaker-dart](https://github.com/hanshs474/aigifmaker-dart) |
+| Elixir | [Hex](https://hex.pm/packages/aigifmaker) | `{:aigifmaker, "~> 0.1"}` | [hanshs474/aigifmaker-ex](https://github.com/hanshs474/aigifmaker-ex) |
+| .NET | [NuGet](https://www.nuget.org/packages/Aigifmaker) | `dotnet add package Aigifmaker` | [hanshs474/aigifmaker-dotnet](https://github.com/hanshs474/aigifmaker-dotnet) |
+| Java / Kotlin | [Maven Central](https://central.sonatype.com/artifact/io.github.hanshs474/aigifmaker) | `io.github.hanshs474:aigifmaker` | [hanshs474/aigifmaker-java](https://github.com/hanshs474/aigifmaker-java) |
+
+## Python
+
+```python
+from aigifmaker import generate, credits
+
+print(credits())  # credits left, free to call
+print(generate("a corgi in sunglasses dancing on a beach"))  # GIF URL
+```
+
+## JavaScript / TypeScript
+
+```js
+import { generate } from "aigifmaker";
+
+console.log(await generate("a paper plane looping over a city skyline at sunset"));
+```
+
+## Go
+
+```go
+url, err := aigifmaker.Generate(ctx, "a cat dancing in the rain, pixel art")
+```
+
+Each GIF costs 1 credit on your AI GIF Maker account, the same as on the website. New accounts get one free GIF (it carries a small aigifmaker.ai badge). Credits and plans are on the [pricing](https://aigifmaker.ai/pricing?utm_source=mintlify&utm_medium=docs) page.
+
+Writing your own client: the [HTTP API](/http-api) is three calls. From an agent instead of code: the [MCP server](/mcp-server).
